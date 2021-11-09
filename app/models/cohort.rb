@@ -15,6 +15,8 @@ class Cohort < ApplicationRecord
 
   delegate :name, to: :enclosure, prefix: true, allow_nil: true
 
+  validates :enclosure, presence: true
+
   def self.exportable_columns
     %w[id name female_tag male_tag enclosure_name created_at updated_at]
   end
