@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Cohort, type: :model do
+
   it "Cohort has associations" do
     is_expected.to belong_to(:male).class_name("Animal").optional
     is_expected.to belong_to(:female).class_name("Animal").optional
@@ -10,7 +11,13 @@ RSpec.describe Cohort, type: :model do
     is_expected.to have_many(:mortality_events)
   end
 
-  include_examples 'organization presence validation'
+  describe 'Cohort validations' do
+    it { should validate_presence_of(:enclosure) }
+  end
+
+  include_examples 'organization presence validation' do
+    let(:model) { described_class.new enclosure: create(:enclosure), organization: organization }
+  end
 
   let!(:cohort) { create(:cohort) }
 
